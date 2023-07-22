@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <form method="POST" action="/create-group">
+            <div
+                class="modal fade"
+                id="modal-home"
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+            >
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Tạo Mới Group</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="name-group" class="form-label">Tên Group</label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="name-group"
+                                    name="title"
+                                    required
+                                    placeholder="Nhập tên Group của bạn..."
+                                />
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Học sinh</label>
+                                <select
+                                    class="form-select"
+                                    id="multiple-select-field"
+                                    data-placeholder="Choose anything"
+                                    multiple
+                                    name="student"
+                                    required
+                                >
+                                    <% for (item of students) { %>
+                                    <option value="<%= item.id %>">
+                                        <%= item.firstName + " " + item.lastName + " Lớp : "+ item.class %>
+                                    </option>
+                                    <% } %>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="note" class="form-label">Ghi chú</label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="note"
+                                    name="note"
+                                    placeholder="Ghi chú..."
+                                    required
+                                />
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary" id="create-group">Tạo Group</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link rel="stylesheet" href="/css/calende.css" />
+    </head>
+    <body>
+        <form id="form-create-calendar">
+            <div
+                class="modal fade"
+                id="modal-add-time-meeting"
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+            >
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Tạo thời gian metting</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="calendar"></div>
+                        </div>
+                        <div class="container">
+                            <div class="">
+                                <div>
+                                    <h6 class="py-2" id="day-calendar">Hãy chọn ngày</h6>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <label for="startTime" class="form-label">Bắt đầu</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="startTime"
+                                        name="startTime"
+                                        placeholder="Bắt đầu..."
+                                        required
+                                    />
+                                </div>
+                                <div class="col-6">
+                                    <label for="endTime" class="form-label">Kết thúc</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="endTime"
+                                        name="endTime"
+                                        placeholder="Kết thúc..."
+                                        required
+                                    />
+                                </div>
+                            </div>
+                            <div class="py-3 d-flex align-items-center justify-content-end">
+                                <button class="btn btn-primary" id="add-meeting-for-group-current">
+                                    Thêm lịch hẹn cho group này
+                                </button>
+                                <button class="btn btn-primary mx-2" id="add-meeting-for-group-empty">
+                                    Thêm lịch trống
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </body>
+</html>

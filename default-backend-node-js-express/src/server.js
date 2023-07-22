@@ -5,6 +5,9 @@ const path = require('path');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const configPublic = require('./configApp/configPublic');
+const connectDB = require('./configApp/connectDB');
+const ConfigViewEngine = require('./configApp/configViewEngine');
+const initWebRoute = require('./Router/web');
 const port = process.env.PORT || 8080;
 
 // using morgan
@@ -42,8 +45,13 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 configPublic(app);
 
 // config routes app and api
+initWebRoute(app);
+
+// config view engine
+ConfigViewEngine(app);
 
 //config connection from client to database
+connectDB();
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);

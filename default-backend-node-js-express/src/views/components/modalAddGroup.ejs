@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <form method="POST" id="form-create-class" action="/create-class">
+            <div
+                class="modal fade"
+                id="modal-add-group-teacher"
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+            >
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Tạo lớp của bạn</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="name-class" class="form-label">Tên Lớp</label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="name-class"
+                                    name="title"
+                                    required
+                                    placeholder="Nhập tên lớp của bạn..."
+                                />
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Group</label>
+                                <select
+                                    class="form-select"
+                                    id="multiple-select-field"
+                                    data-placeholder="Choose anything"
+                                    multiple
+                                    name="group"
+                                    required
+                                >
+                                    <% for (item of groups) { %>
+                                    <option value="<%= item.id %>">
+                                        <%= "ID : " + item.id + " Tên Group: " + item.title %>
+                                    </option>
+                                    <% } %>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary" id="create-group">Tạo Classes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </body>
+</html>
