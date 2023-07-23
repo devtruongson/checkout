@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Meeting</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+            crossorigin="anonymous"
+        />
+        <link rel="stylesheet" href="/css/style.css" />
+    </head>
+    <body>
+        <main class="container py-5">
+            <h2 class="text-center" id="user-check-auth-title">Lịch Meeting</h2>
+            <div class="row">
+                <div class="col-8">
+                    <form method="POST" action="/handle-meeting">
+                        <div class="mb-3">
+                            <label for="link-group" class="form-label">Gửi link cho group</label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="link-group"
+                                aria-describedby="emailHelp"
+                                placeholder="Nhập link của bạn vào đây....."
+                                name="link"
+                                required
+                            />
+                        </div>
+                        <div class="mb-3">
+                            <label for="note" class="form-label">Gửi lời nhắc</label>
+                            <textarea
+                                style="min-height: 400px"
+                                type="text"
+                                class="form-control"
+                                id="note"
+                                aria-describedby="emailHelp"
+                                placeholder="Nhập lời nhắc của bạn vào đây....."
+                                name="notify"
+                                required
+                            ></textarea>
+                        </div>
+                        <input type="text" hidden value="<%= id %>" name="id" />
+                        <button type="submit" class="btn btn-primary">Tạo Meeting</button>
+                    </form>
+                </div>
+                <div class="col-4">
+                    <p class="text-center">
+                        <strong>Thông tin group hôm nay của bạn</strong>
+                    </p>
+                    <div class="pt-4">
+                        <% if(meeting?.Data && meeting?.Data.length > 0){ %> <% for (item of meeting?.Data) { %>
+                        <div class="card mb-3 py-2 px-3">
+                            <h4>Tên Group: <%= item.title %></h4>
+                        </div>
+                        <% } %> <% } else{ %>
+                        <h4 class="text-center">Không có group nào</h4>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <script>
+            const Title = document.querySelector('#user-check-auth-title');
+
+            let user = JSON.parse(localStorage.getItem('users'));
+
+            if (!user) {
+                window.location.href = '/';
+            }
+
+            console.log('<%- JSON.stringify(meeting) %>');
+
+            Title.innerHTML =
+                user.role === 'R1'
+                    ? "Tham Gia Lịch Meeting Ngày <%= meeting ? meeting.day: 'Đang Cập Nhật' %>"
+                    : `Giảng Viên Meeting Ngày <%= meeting ? meeting.day: 'Đang Cập Nhật' %>`;
+        </script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"
+        ></script>
+    </body>
+</html>

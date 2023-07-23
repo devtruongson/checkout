@@ -1,23 +1,33 @@
 const { Op } = require('sequelize');
 
-const handleRelationShipJson = (modelOne, modelTwo, string = 'group') => {
+const handleRelationShipJson = (modelOne, modelTwo, string = 'group', where) => {
     return modelOne
-        .findAll()
+        .findOne(where)
         .then(async (classes) => {
-            for (const cls of classes) {
-                const idArray = JSON.parse(JSON.parse(cls[string]));
+            const result = [];
+
+            console.log(classes);
+
+            try {
+                const idArray = JSON.parse(JSON.parse(classes.student));
+
+                console.log('check idArray :', idArray);
 
                 const groups = await modelTwo.findAll({
                     where: {
                         id: {
-                            [Op.in]: idArray, // Sử dụng Op.in để lấy tất cả các group có id trong mảng
+                            [Op.in]: [...idArray],
                         },
                     },
                     raw: true,
                 });
 
-                return groups;
+                result.push(...groups);
+            } catch (error) {
+                console.log('Lỗi khi phân tích cú pháp chuỗi JSON:', error);
             }
+
+            return result;
         })
         .catch((error) => {
             console.log('Lỗi:', error);

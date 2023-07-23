@@ -9,7 +9,10 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
-            Meeting.belongsTo(models.Group, { foreignKey: 'groupID', targetKey: 'id', as: 'DataMeeting' });
+            Meeting.belongsTo(models.Group, { foreignKey: 'id', targetKey: 'meeting', as: 'DataMeeting' });
+            Meeting.belongsTo(models.User, { foreignKey: 'idTeacher', targetKey: 'id', as: 'DataUser' });
+            Meeting.belongsTo(models.History, { foreignKey: 'id', targetKey: 'meetingID', as: 'DataHistory' });
+            Meeting.hasMany(models.Group, { foreignKey: 'meeting', sourceKey: 'id', as: 'Data' });
         }
     }
     Meeting.init(
@@ -17,10 +20,12 @@ module.exports = (sequelize, DataTypes) => {
             day: DataTypes.STRING,
             startTime: DataTypes.STRING,
             endTime: DataTypes.STRING,
-            groupID: DataTypes.STRING,
             isDone: DataTypes.BOOLEAN,
             isTeacher: DataTypes.BOOLEAN,
             isCancelled: DataTypes.BOOLEAN,
+            idTeacher: DataTypes.STRING,
+            count: DataTypes.INTEGER,
+            doneData: DataTypes.TEXT('long'),
         },
         {
             sequelize,

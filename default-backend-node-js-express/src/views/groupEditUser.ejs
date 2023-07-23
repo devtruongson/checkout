@@ -13,11 +13,11 @@
         <link rel="stylesheet" href="/css/style.css" />
     </head>
     <body>
-        <%- include('./components/modalGroup.ejs') %> <%- include('./components/modalAddMeeting.ejs') %>
+        <%- include('./components/modalGroup.ejs') %> <%- include('./components/modalAddMeetingNotActive.ejs') %>
         <main>
             <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #00b7eb">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="#">XIN CHÀO GIẢNH VIÊN</a>
+                    <a class="navbar-brand" href="#">XIN CHÀO SINH VIÊN</a>
                     <button
                         class="navbar-toggler"
                         type="button"
@@ -70,9 +70,6 @@
                                     </li>
                                     <li><a class="dropdown-item" href="#">Something else here</a></li>
                                 </ul>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/get-manage-user">Quản lí tài khoản</a>
                             </li>
                         </ul>
                     </div>
@@ -140,6 +137,15 @@
                                         <%= item.isCancelled ? "Đã bị Hủy" : "" %>
                                         <br />
                                         Nguời Tạo: <%= item.isTeacher ? "Giảng Viên" : "Học Sinh" %>
+                                        <br />
+                                        <% if(!data?.data?.group?.isDone && data?.data?.group?.active){ %>
+                                        <a href="" class="d-block btn btn-primary mt-3" id="meeting-redirect"
+                                            >Tham Gia Meeting</a
+                                        >
+                                        <% } else{ %><button class="d-block btn btn-primary mt-3">
+                                            <%= !data?.data?.group?.active ? "Đang chờ xác nhận" :"Chưa thể tham gia" %>
+                                        </button>
+                                        <% } %>
                                     </h6>
                                 </div>
                             </div>
@@ -148,7 +154,7 @@
                         <div class="py-3">
                             <button
                                 data-bs-toggle="modal"
-                                data-bs-target="#modal-add-time-meeting"
+                                data-bs-target="#modal-add-meeting-not-active"
                                 class="btn btn-primary add-meeting-for-unix"
                                 onclick="handleClickAddMeeting('<%= data.data.group.id %>')"
                             >
@@ -160,31 +166,33 @@
                     <div class="py-3">
                         <button
                             data-bs-toggle="modal"
-                            data-bs-target="#modal-add-time-meeting"
+                            data-bs-target="#modal-add-meeting-not-active"
                             class="btn btn-primary add-meeting-for-unix"
-                            onclick="handleClickAddMeeting(`<%= data.data.group.id %>`)"
                         >
                             Thêm lịch hẹn
                         </button>
                     </div>
-                    <% } %> <% } else{ %>
-                    <h1>bar</h1>
-                    <% } %>
+                    <% } %> <% } else{ %> <% } %>
                 </div>
             </div>
         </main>
         <script>
             const User = localStorage.getItem('users');
-
             if (!User) {
                 window.location.href = 'http://localhost:8080/get-login';
             }
         </script>
-        <script src="/js/main.js"></script>
-        <script src="/js/AddMetting.js"></script>
         <script>
             console.log('<%- JSON.stringify(data) %>');
+
+            const RedirectBtn = document.querySelector('#meeting-redirect');
+            if (RedirectBtn) {
+                let idGr = window.location.pathname.split('/').pop();
+                RedirectBtn.setAttribute('href', `/get-meeting-user/<%= item.id %>?idGr=${idGr}`);
+            }
         </script>
+        <script src="/js/main.js"></script>
+        <script src="/js/addMeetingUser.js"></script>
         <script
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"

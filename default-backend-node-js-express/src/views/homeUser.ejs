@@ -13,11 +13,11 @@
         <link rel="stylesheet" href="/css/style.css" />
     </head>
     <body>
-        <%- include('./components/modalGroup.ejs') %> <%- include('./components/modalAddGroup.ejs') %>
+        <%- include('./components/modalGroup.ejs') %>
         <main>
             <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #00b7eb">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="#">XIN CHÀO GIẢNH VIÊN</a>
+                    <a class="navbar-brand" href="#">XIN CHÀO HỌC SINH</a>
                     <button
                         class="navbar-toggler"
                         type="button"
@@ -32,7 +32,7 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#">Home</a>
+                                <a class="nav-link active" aria-current="page" href="/">Home</a>
                             </li>
 
                             <li class="nav-item dropdown">
@@ -71,31 +71,26 @@
                                     <li><a class="dropdown-item" href="#">Something else here</a></li>
                                 </ul>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/get-manage-user">Quản lí tài khoản</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
             </nav>
             <div class="container py-4">
-                <div class="render-class"></div>
+                <div class="render-class-user"></div>
             </div>
         </main>
         <script>
             let CheckData = JSON.parse(' <%- JSON.stringify(data) %>');
-            if (CheckData) {
-                localStorage.setItem('users', JSON.stringify(CheckData.user));
-            }
             const User = localStorage.getItem('users');
             if (!User) {
                 window.location.href = 'http://localhost:8080/get-login';
             } else {
-                if (JSON.parse(User).role === 'R1') {
-                    window.location.href = 'http://localhost:8080/get-home-user';
+                if (JSON.parse(User).role === 'R0') {
+                    window.location.href = 'http://localhost:8080/';
                 }
             }
         </script>
+        <script src="/js/user.js"></script>
         <script src="/js/main.js"></script>
         <script
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"

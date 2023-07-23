@@ -1,6 +1,9 @@
 const RenderClass = document.querySelector('.render-class');
+const BtnViewCalendar = document.querySelector('#view-lich-teacher');
 
 const user = JSON.parse(localStorage.getItem('users'));
+
+BtnViewCalendar.setAttribute('href', `/manage-calendar/${user.id}`);
 
 if (user) {
     const FormElement = document.querySelector('#form-create-class');
@@ -56,10 +59,21 @@ function Render(data) {
             `;
         let DataGroup = item.DataGroup.map(
             (itemChildren) => `
-            <a style="text-decoration: none; color: #333;" class="col-4" href="/view-end-edit-group/${itemChildren.id}" >
-                <div class="py-2 px-1" style="background-color: #ccc; border-radius: 3px;">
+            <a style="text-decoration: none; color: #333;" class="col-4" href="/view-end-edit-group/${
+                itemChildren.id
+            }" >
+                <div class="py-2 px-1" style="background-color: ${
+                    itemChildren?.isDone ? `#ee4d2d` : `#ccc`
+                }; border-radius: 3px;">
                     <h5>Tên Groups ${itemChildren.title}</h5>
                     <p>ID Group : ${itemChildren.id}</p>
+                    ${
+                        itemChildren?.isDone
+                            ? ` <p class="text-center">
+                           <strong>Đã Làm Song</strong>
+                       </p>`
+                            : ''
+                    }
                 </div>
             </a>
            `,

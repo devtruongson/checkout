@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link rel="stylesheet" href="/css/calende.css" />
+        <style>
+            .full{
+                background-color: #ee4d2d;
+            }
+        </style>
+    </head>
+    <body>
+        <form id="form-create-calendar">
+            <div
+                class="modal fade"
+                id="modal-add-meeting-not-active"
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+            >
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Đăng ký thời gian meeting</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="calendar"></div>
+                        </div>
+                        <div class="container">
+                            <div class="row">
+                                <% if(meetings && meetings.length > 0){ %> <% for (item of meetings) { %>
+                                <div class="container">
+                                    <div class="col-12 my-2 card px-3 py-1">
+                                        <div
+                                            class="d-flex justify-content-between align-items-center <%= item.count == 3 ? "full" :"" %>"
+                                        >
+                                            <div>
+                                                <span class="d-block">Ngày: <%= item.day %> </span>
+                                                <span class="d-block">Bắt đầu: <%= item.startTime %> </span>
+                                                <span class="d-block">Kết thúc: <%= item.endTime %> </span>
+                                                <span class="d-block"
+                                                    >Trạng Thái <% if(item.isCancelled || item.isDone ){ %> Đã Hoàn
+                                                    Thành Hoặc Đã Hủy <% } else{ %> <%= item.count == 3 ? "Full" : "Đang trống" %> <% } %>
+                                                </span>
+                                                <span class="d-block"> Số lượng: <%= item.count %> </span>
+
+                                                <div class="py-2">
+                                                    <p>
+                                                        Giảng viên:
+                                                        <strong
+                                                            ><%= item.DataUser.firstName + " " + item.DataUser.lastName
+                                                            %>
+                                                        </strong>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <% if(!item.isCancelled && !item.isDone && item.count < 3 ){ %>
+                                                    <button class="btn btn-primary" onclick="handleBookingMeeting(`<%= item.id %>`)">Đặt Lịch</button>
+                                                     <% } else{ %> Đang Trống Hoặc Đã Full Hoặc Đã Bị Hủy <% } %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <% } %> <% } else{ %>
+                                <h1>bar</h1>
+                                <% } %>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <script>
+            console.log('<%- JSON.stringify(meetings) %>');
+        </script>
+    </body>
+</html>

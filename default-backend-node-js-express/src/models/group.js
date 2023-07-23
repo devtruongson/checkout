@@ -10,7 +10,11 @@ module.exports = (sequelize, DataTypes) => {
         static associate(models) {
             // define association here
             Group.belongsTo(models.Class, { foreignKey: 'id', targetKey: 'group', as: 'DataGroup' });
-            Group.hasMany(models.Meeting, { foreignKey: 'groupID', sourceKey: 'id', as: 'DataMeeting' });
+            Group.belongsTo(models.Meeting, { foreignKey: 'meeting', targetKey: 'id', as: 'Data' });
+            Group.hasMany(models.Meeting, { foreignKey: 'id', sourceKey: 'meeting', as: 'DataMeeting' });
+            // Group.hasMany(models.Meeting, { foreignKey: 'id', sourceKey: 'id', as: 'DataMeeting' });
+
+            Group.hasMany(models.History, { foreignKey: 'groupID', sourceKey: 'id', as: 'DataHistoryData' });
         }
     }
     Group.init(
@@ -20,6 +24,11 @@ module.exports = (sequelize, DataTypes) => {
             student: DataTypes.JSON,
             classID: DataTypes.STRING,
             note: DataTypes.TEXT('long'),
+            link: DataTypes.TEXT('long'),
+            notify: DataTypes.TEXT('long'),
+            active: DataTypes.BOOLEAN,
+            isDone: DataTypes.BOOLEAN,
+            linkStudent: DataTypes.TEXT('long'),
         },
         {
             sequelize,

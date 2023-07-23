@@ -31,6 +31,16 @@ module.exports = {
             isTeacher: {
                 type: Sequelize.BOOLEAN,
             },
+            idTeacher: {
+                type: Sequelize.STRING,
+            },
+            count: {
+                type: Sequelize.INTEGER,
+                defaultValue: 0,
+            },
+            doneData: {
+                type: Sequelize.TEXT('long'),
+            },
             createdAt: {
                 allowNull: false,
                 type: Sequelize.DATE,

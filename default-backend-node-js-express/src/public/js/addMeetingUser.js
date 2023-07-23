@@ -1,284 +1,31 @@
-const DayCalendar = document.querySelector('#day-calendar');
-const startTime = document.querySelector('#startTime');
-const endTime = document.querySelector('#endTime');
-const AddMeetingBtn = document.querySelector('.add-meeting-for-unix');
-const FormElement = document.querySelector('#form-create-calendar');
-const ButtonClickAddMeetingCurrent = document.querySelector('#add-meeting-for-group-current');
-const ButtonClickAddMeetingEmpty = document.querySelector('#add-meeting-for-group-empty');
-const ButtonClickAddMeetingEmptyPage = document.querySelector('#add-meeting-for-group-empty-page');
-const SelectPageGroupOrEmpty = document.querySelector('#select-grop-create');
-const FormAddGroupBtn = document.querySelector('#add-group-limit-count');
-const SelectGroupAdd = document.querySelector('#select-field-group-add');
-const ActiveGroup = document.querySelector('#active-group-meeting');
+async function handleBookingMeeting(id) {
+    let idGr = window.location.pathname.split('/').pop();
 
-const userAddMetting = JSON.parse(localStorage.getItem('users'));
-
-let IDGr = null;
-let day = null;
-let idMeeting = null;
-let idActiveGroup = null;
-let idMeetingActive = null;
-
-function handleClickAddGroupFunc(id) {
-    idMeeting = +id;
-}
-
-function handleClickAddMeeting(id) {
-    IDGr = +id;
-}
-
-function handleClickActiveGroup(id, idMeeting) {
-    idActiveGroup = +id;
-    idMeetingActive = +idMeeting;
-}
-
-if (ButtonClickAddMeetingCurrent) {
-    ButtonClickAddMeetingCurrent.onclick = () => {
-        FormElement.onsubmit = (e) => {
-            e.preventDefault();
-
-            if (!IDGr || !day) {
-                alert('Bạn nhập thiếu trường!');
-                return;
-            }
-
-            const dataBuilder = {
-                day,
-                startTime: startTime.value,
-                endTime: endTime.value,
-                groupID: IDGr,
-                isTeacher: userAddMetting.role,
-                type: 'group',
-                idTeacher: userAddMetting.id,
-            };
-
-            const requestOptions = {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(dataBuilder),
-            };
-
-            fetch('/create-meetings', requestOptions)
-                .then((res) => res.json())
-                .then((res) => {
-                    console.log(res);
-                    window.location.reload();
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
-        };
-    };
-}
-
-if (ButtonClickAddMeetingEmpty) {
-    ButtonClickAddMeetingEmpty.onclick = () => {
-        FormElement.onsubmit = (e) => {
-            e.preventDefault();
-
-            if (!IDGr || !day) {
-                alert('Bạn nhập thiếu trường!');
-                return;
-            }
-
-            const dataBuilder = {
-                day,
-                startTime: startTime.value,
-                endTime: endTime.value,
-                isTeacher: userAddMetting.role,
-                idTeacher: userAddMetting.id,
-            };
-
-            const requestOptions = {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(dataBuilder),
-            };
-
-            fetch('/create-meetings', requestOptions)
-                .then((res) => res.json())
-                .then((res) => {
-                    console.log(res);
-                    window.location.reload();
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
-        };
-    };
-}
-
-function handleChangeStatus(e, id) {
-    if (e.target.value === 'false') {
-        const check = confirm('Bạn có chắc chắn hủy!');
-
-        if (!check) {
-            return;
-        }
-
-        const requestOptions = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                id: id,
-            }),
-        };
-
-        fetch('/canceled-meeting', requestOptions)
-            .then((res) => res.json())
-            .then((res) => {
-                console.log(res);
-                window.location.reload();
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    } else {
-        const requestOptions = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                id: id,
-            }),
-        };
-
-        fetch('/done-meeting', requestOptions)
-            .then((res) => res.json())
-            .then((res) => {
-                console.log(res);
-                window.location.reload();
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+    if (Number(idGr) == NaN) {
+        alert('Bạn đã chèn tham số không hợp lệ trên trình duyệt!');
+        return;
     }
-}
 
-if (ButtonClickAddMeetingEmptyPage) {
-    ButtonClickAddMeetingEmptyPage.onclick = () => {
-        FormElement.onsubmit = (e) => {
-            e.preventDefault();
-
-            if (!day) {
-                alert('Bạn nhập thiếu trường!');
-                return;
-            }
-
-            const dataBuilder = {
-                day,
-                startTime: startTime.value,
-                endTime: endTime.value,
-                isTeacher: userAddMetting.role,
-                idTeacher: userAddMetting.id,
-                type: SelectPageGroupOrEmpty.value == 'null' ? null : 'group',
-                groupID: SelectPageGroupOrEmpty.value == 'null' ? null : SelectPageGroupOrEmpty.value,
-            };
-
-            const requestOptions = {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(dataBuilder),
-            };
-
-            fetch('/create-meetings', requestOptions)
-                .then((res) => res.json())
-                .then((res) => {
-                    console.log(res);
-                    window.location.reload();
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
-        };
+    const Option = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            id: id,
+            idGr,
+        }),
     };
-}
 
-if (FormAddGroupBtn) {
-    FormAddGroupBtn.onsubmit = (e) => {
-        e.preventDefault();
+    const Res = await fetch('/booking-meeting-empty', Option);
 
-        if (SelectGroupAdd) {
-            if (!SelectGroupAdd.value || !idMeeting) {
-                alert('Bạn hãy nhập đủ các trường!');
-                return;
-            }
+    const data = await Res.json();
 
-            const requestOptions = {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    id: idMeeting,
-                    GrID: SelectGroupAdd.value,
-                }),
-            };
-
-            fetch('/add-group-meeting', requestOptions)
-                .then((res) => res.json())
-                .then((res) => {
-                    if (res.errCode === 0) {
-                        window.location.reload();
-                    } else {
-                        alert(res.msg);
-                    }
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
-        }
-    };
-}
-
-if (ActiveGroup) {
-    ActiveGroup.onsubmit = (e) => {
-        e.preventDefault();
-        let check = confirm('Bạn chắc chắn với hành động của mình!');
-
-        if (!check) return;
-        const selectElement = ActiveGroup.querySelector('select');
-
-        console.log('check lot : ', selectElement, idActiveGroup, idMeetingActive);
-
-        if (!selectElement || !idActiveGroup || !idMeetingActive) return;
-
-        console.log('true');
-
-        const requestOptions = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                id: idMeetingActive,
-                active: selectElement.value == 'true' ? true : false,
-                GrID: idActiveGroup,
-            }),
-        };
-
-        fetch('/active-group', requestOptions)
-            .then((res) => res.json())
-            .then((res) => {
-                if (res.errCode === 0) {
-                    window.location.reload();
-                } else {
-                    alert(res.msg);
-                }
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    };
+    if (data.errCode === 0) {
+        window.location.reload();
+    } else {
+        alert(data.msg);
+    }
 }
 
 function CalendarControl() {
@@ -420,6 +167,22 @@ function CalendarControl() {
                 currentMonth === changedMonth &&
                 document.querySelectorAll('.number-item')
             ) {
+                fetch('/get-all-meeting-empty')
+                    .then((res) => res.json())
+                    .then((res) => {
+                        if (res.errCode === 0) {
+                            if (res.data.length > 0) {
+                                console.log(res.data);
+                                for (let i = 0; i < res.data.length; i++) {
+                                    let date = res.data[i].day.split(' ')[0];
+
+                                    document.querySelectorAll('.number-item')[date - 1].classList.add('calendar-today');
+                                }
+                            }
+                        } else {
+                            alert(res.msg);
+                        }
+                    });
                 document.querySelectorAll('.number-item')[calendar.getDate() - 1].classList.add('calendar-today');
             }
         },
