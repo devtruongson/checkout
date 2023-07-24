@@ -25,7 +25,6 @@ module.exports = (sequelize, DataTypes) => {
             isCancelled: DataTypes.BOOLEAN,
             idTeacher: DataTypes.STRING,
             count: DataTypes.INTEGER,
-            doneData: DataTypes.TEXT('long'),
         },
         {
             sequelize,

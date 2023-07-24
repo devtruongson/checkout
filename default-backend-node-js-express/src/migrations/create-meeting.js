@@ -38,9 +38,6 @@ module.exports = {
                 type: Sequelize.INTEGER,
                 defaultValue: 0,
             },
-            doneData: {
-                type: Sequelize.TEXT('long'),
-            },
             createdAt: {
                 allowNull: false,
                 type: Sequelize.DATE,

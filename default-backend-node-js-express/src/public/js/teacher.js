@@ -3,7 +3,9 @@ const BtnViewCalendar = document.querySelector('#view-lich-teacher');
 
 const user = JSON.parse(localStorage.getItem('users'));
 
-BtnViewCalendar.setAttribute('href', `/manage-calendar/${user.id}`);
+if (BtnViewCalendar) {
+    BtnViewCalendar.setAttribute('href', `/manage-calendar/${user.id}`);
+}
 
 if (user) {
     const FormElement = document.querySelector('#form-create-class');

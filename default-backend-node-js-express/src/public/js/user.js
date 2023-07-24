@@ -33,13 +33,5 @@ function Render(data) {
         </div>`;
     });
 
-    DivRender.innerHTML =
-        htmlRender.join(' ') +
-        `<button
-            class="btn btn-primary mt-3 px-4 py-2 ms-3"
-            data-bs-toggle="modal"
-            data-bs-target="#modal-add-group-teacher"
-        >
-            Thêm Group
-        </button>`;
+    DivRender.innerHTML = htmlRender.join(' ');
 }

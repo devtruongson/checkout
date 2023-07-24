@@ -12,8 +12,6 @@ module.exports = (sequelize, DataTypes) => {
             Group.belongsTo(models.Class, { foreignKey: 'id', targetKey: 'group', as: 'DataGroup' });
             Group.belongsTo(models.Meeting, { foreignKey: 'meeting', targetKey: 'id', as: 'Data' });
             Group.hasMany(models.Meeting, { foreignKey: 'id', sourceKey: 'meeting', as: 'DataMeeting' });
-            // Group.hasMany(models.Meeting, { foreignKey: 'id', sourceKey: 'id', as: 'DataMeeting' });
-
             Group.hasMany(models.History, { foreignKey: 'groupID', sourceKey: 'id', as: 'DataHistoryData' });
         }
     }
