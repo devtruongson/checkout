@@ -143,7 +143,8 @@
                                             >Tham Gia Meeting</a
                                         >
                                         <% } else{ %><button class="d-block btn btn-primary mt-3">
-                                            <%= !data?.data?.group?.active ? "Đang chờ xác nhận" :"Chưa thể tham gia" %>
+                                            <%= !data?.data?.group?.active ? "Đang chờ xác nhận" :
+                                            data?.data?.group?.isDone? "Đã Hoàn Thành":"Chưa thể tham gia" %>
                                         </button>
                                         <% } %>
                                     </h6>

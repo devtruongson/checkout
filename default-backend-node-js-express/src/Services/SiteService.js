@@ -609,6 +609,11 @@ class SiteService {
                     },
                 );
 
+                await db.History.create({
+                    groupID: data.idGr,
+                    meetingID: data.id,
+                });
+
                 resolve();
             } catch (error) {
                 reject(error);
@@ -684,6 +689,7 @@ class SiteService {
                     await db.Group.update(
                         {
                             active: true,
+                            isDone: false,
                         },
                         {
                             where: {

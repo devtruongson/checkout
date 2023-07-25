@@ -248,11 +248,7 @@ if (ActiveGroup) {
         if (!check) return;
         const selectElement = ActiveGroup.querySelector('select');
 
-        console.log('check lot : ', selectElement, idActiveGroup, idMeetingActive);
-
         if (!selectElement || !idActiveGroup || !idMeetingActive) return;
-
-        console.log('true');
 
         const requestOptions = {
             method: 'POST',

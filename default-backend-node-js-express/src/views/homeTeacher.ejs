@@ -13,7 +13,8 @@
         <link rel="stylesheet" href="/css/style.css" />
     </head>
     <body>
-        <%- include('./components/modalGroup.ejs') %> <%- include('./components/modalAddGroup.ejs') %>
+        <%- include('./components/modalGroup.ejs') %> <%- include('./components/modalAddGroup.ejs') %> <%-
+        include('./components/modalManage.ejs') %>
         <main>
             <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #00b7eb">
                 <div class="container-fluid">
@@ -64,6 +65,16 @@
                                             >Thêm Group</a
                                         >
                                     </li>
+                                    <li id="create-new-class-btn">
+                                        <a
+                                            class="dropdown-item"
+                                            href="#"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#modal-add-time-meeting"
+                                            class="btn btn-primary add-meeting-for-unix"
+                                            >Tạo lịch hẹn</a
+                                        >
+                                    </li>
                                     <li><a class="dropdown-item" id="logout" href="#">Đăng Xuất</a></li>
                                     <li>
                                         <hr class="dropdown-divider" />
@@ -100,6 +111,7 @@
                 }
             }
         </script>
+        <script src="/js/AddMetting.js"></script>
         <script src="/js/main.js"></script>
         <script src="/js/teacher.js"></script>
         <script
