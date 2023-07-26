@@ -631,6 +631,7 @@ class SiteService {
                             [Op.like]: `%${id}%`,
                         },
                     },
+                    include: [{ model: db.Class, as: 'DataGroup' }],
                 });
 
                 resolve({
@@ -881,6 +882,30 @@ class SiteService {
                         id,
                     },
                 });
+
+                resolve({
+                    errCode: 0,
+                    msg: 'ok',
+                });
+            } catch (error) {
+                reject(error);
+            }
+        });
+    }
+
+    async handlePostNotify(data) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                await db.Group.update(
+                    {
+                        notify: data.notify,
+                    },
+                    {
+                        where: {
+                            meeting: data.id,
+                        },
+                    },
+                );
 
                 resolve({
                     errCode: 0,

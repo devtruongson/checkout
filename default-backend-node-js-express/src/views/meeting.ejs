@@ -35,7 +35,7 @@
                             <textarea
                                 style="min-height: 400px"
                                 type="text"
-                                class="form-control"
+                                class="form-control input-notify-teacher"
                                 id="note"
                                 aria-describedby="emailHelp"
                                 placeholder="Nhập lời nhắc của bạn vào đây....."
@@ -43,8 +43,9 @@
                                 required
                             ></textarea>
                         </div>
-                        <input type="text" hidden value="<%= id %>" name="id" />
-                        <button type="submit" class="btn btn-primary">Tạo Meeting</button>
+                        <input type="text" hidden value="<%= id %>" name="id" id="id-meeting-gr" />
+                        <button type="submit" class="btn btn-primary">Hoàn Thành Meeting</button>
+                        <button type="button" class="btn btn-success" id="send-notify">Gửi Lời Nhắc</button>
                     </form>
                 </div>
                 <div class="col-4">
@@ -55,6 +56,10 @@
                         <% if(meeting?.Data && meeting?.Data.length > 0){ %> <% for (item of meeting?.Data) { %>
                         <div class="card mb-3 py-2 px-3">
                             <h4>Tên Group: <%= item.title %></h4>
+                            <div class="card px-2 py-3">
+                                <h5 class="py-2">Link của group gửi lên</h5>
+                                <p><%= item.linkStudent ? item.linkStudent: "Chưa gửi bài" %></p>
+                            </div>
                         </div>
                         <% } %> <% } else{ %>
                         <h4 class="text-center">Không có group nào</h4>
@@ -72,13 +77,12 @@
                 window.location.href = '/';
             }
 
-            console.log('<%- JSON.stringify(meeting) %>');
-
             Title.innerHTML =
                 user.role === 'R1'
                     ? "Tham Gia Lịch Meeting Ngày <%= meeting ? meeting.day: 'Đang Cập Nhật' %>"
                     : `Giảng Viên Meeting Ngày <%= meeting ? meeting.day: 'Đang Cập Nhật' %>`;
         </script>
+        <script src="/js/notify.js"></script>
         <script
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"

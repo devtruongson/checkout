@@ -36,6 +36,7 @@ const initWebRoute = (app) => {
     router.get('/get-detail-user', SiteController.handleGetDetailUser);
     router.post('/update-user', SiteController.handleUpdateUser);
     router.post('/delete-user/:id', SiteController.handleDeleteUser);
+    router.post('/post-notify', SiteController.handlePostNotify);
 
     return app.use('/', router);
 };

@@ -82,8 +82,9 @@ class SiteController {
     async getHomeUser(req, res) {
         const data = await SiteService.handleGetAllStudents();
         const groups = await SiteService.handleGetAllGroups();
+        const classes = await SiteService.handleGetAllClasses();
 
-        res.render('homeUser.ejs', { data: '', students: data, groups });
+        res.render('homeUser.ejs', { data: '', students: data, groups, classes });
     }
 
     async getGetManageUser(req, res) {
@@ -314,6 +315,19 @@ class SiteController {
     async handleDeleteUser(req, res) {
         try {
             const data = await SiteService.handleDeleteUser(req.params.id);
+
+            res.status(200).json(data);
+        } catch (error) {
+            res.status(200).json({
+                errCode: -1,
+                msg: 'err from server',
+            });
+        }
+    }
+
+    async handlePostNotify(req, res) {
+        try {
+            const data = await SiteService.handlePostNotify(req.body);
 
             res.status(200).json(data);
         } catch (error) {
